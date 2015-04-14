@@ -11,6 +11,26 @@ $ composer require frozzare/wp-test-suite
 
 ## Example
 
+Example `.travis.yml`:
+
+```yaml
+language: php
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+
+env:
+  - WP_VERSION=latest WP_MULTISITE=0
+
+before_script:
+  - composer install
+  - bash vendor/frozzare/wp-test-suite/bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+
+script: phpunit
+```
+
 Example `phpunit.xml.dist`:
 
 ```xml
