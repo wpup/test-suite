@@ -75,6 +75,11 @@ WP_Test_Suite::run();
 
 #### Without a bootstrap.php
 
+#### install-wp-tests.sh
+
+This package include `install-wp-tests.sh` and the path is:
+`vendor/frozzare/wp-test-suite/bin/install-wp-tests.sh`
+
 ##### WTB_PLUGIN_FILE_NAME
 
 With this constant you don't have to create your own `boostrap.php`. Just include
