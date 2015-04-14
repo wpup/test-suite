@@ -65,10 +65,6 @@ WP_Test_Suite::load_plugins(array(
   dirname(__DIR__) . '/simple-gtm.php'
 ));
 
-WP_Test_Suite::load_files(array(
-  __DIR__ . '/helpers.php'
-));
-
 WP_Test_Suite::run();
 ```
 ## Documentation
