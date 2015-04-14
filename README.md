@@ -78,7 +78,10 @@ WP_Test_Suite::run();
 #### install-wp-tests.sh
 
 This package include `install-wp-tests.sh` and the path is:
-`vendor/frozzare/wp-test-suite/bin/install-wp-tests.sh`
+
+```
+vendor/frozzare/wp-test-suite/bin/install-wp-tests.sh
+```
 
 ##### WTB_PLUGIN_FILE_NAME
 
