@@ -84,7 +84,9 @@ class WP_Test_Suite {
 			self::$files[] = $files;
 		} else {
 			$files = array_filter( $files, function ( $file ) {
-				return file_exists( $file );
+				$path = getcwd();
+				$pos  = strpos( $file, $path );
+				return file_exists( $file ) && $pos > 0 && $pos !== false;
 			} );
 			$files = array_unique( $files );
 			self::$files = array_merge( self::$files, $files );
