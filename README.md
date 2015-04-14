@@ -53,25 +53,25 @@ WP_Test_Suite::run();
 ```
 ## Documentation
 
-### Without a bootstrap.php
+#### Without a bootstrap.php
 
-#### WTB_PLUGIN_FILE_NAME
+##### WTB_PLUGIN_FILE_NAME
 
 With this constant you don't have to create your own `boostrap.php`. Just include
 `WTB_PLUGIN_FILE_NAME` const in your `phpunit.xml.dist` with the plugin file name
 that should be loaded.
 
-### With a bootstrap.php
+#### With a bootstrap.php
 
-#### WP_Test_Suite::load_plugins
+##### WP_Test_Suite::load_plugins
 
 A array of plugin paths or a string of a plugin path to load.
 
-#### WP_Test_Suite::load_files
+##### WP_Test_Suite::load_files
 
 A array of file paths or a string of a file path to load.
 
-#### WP_Test_Suite::set_test_root
+##### WP_Test_Suite::set_test_root
 
 Set a new test root path. It will try to autoload from:
 - WP_DEVELOP_DIR/tests/phpunit
