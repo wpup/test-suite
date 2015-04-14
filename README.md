@@ -3,6 +3,12 @@
 Instead of adding a `boostrap.php` to every plugin you do you can just install this package and point to the `bootstrap.php`.
 For small plugins this should be enough. If you require something more advanced this isn't the package for your project.
 
+# Install
+
+```
+$ composer require frozzare/wp-test-suite
+```
+
 ## Example
 
 Example `phpunit.xml.dist`:
@@ -30,15 +36,17 @@ Example `phpunit.xml.dist`:
 </phpunit>
 ```
 
-Example of using your own `boostrap.php` with WordPress Test Suite:
+Example of using your own `tests/boostrap.php` with WordPress Test Suite:
 
 ```php
+require dirname(__DIR__) . '/vendor/autoload.php';
+
 WP_Test_Suite::load_plugins(array(
-  dirname(__DIR__) . '/simple-gtm.php';
+  dirname(__DIR__) . '/simple-gtm.php'
 ));
 
 WP_Test_Suite::load_files(array(
-  'helpers.php'
+  __DIR__ . '/helpers.php'
 ));
 
 WP_Test_Suite::run();
