@@ -1,9 +1,6 @@
 <?php
 
-/**
- *  Don't continue if `WP_Test_Suite` class exists.
- */
-
+// Don't continue if `WP_Test_Suite` class exists.
 if ( class_exists( 'WP_Test_Suite' ) ) {
 	return;
 }
