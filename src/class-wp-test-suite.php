@@ -88,9 +88,12 @@ class WP_Test_Suite {
 	 */
 
 	public static function load_files( $files ) {
-		if ( is_string( $files ) && file_exists( $files ) ) {
+		if ( is_string( $files ) ) {
+			if ( ! file_exists( $files ) ) {
+				return;
+			}
 			self::$files[] = $files;
-		} else {
+		} else if ( is_array( $files ) ) {
 			$files = array_filter( $files, function ( $file ) {
 				return file_exists( $file );
 			} );
@@ -106,9 +109,13 @@ class WP_Test_Suite {
 	 */
 
 	public static function load_plugins( $plugins ) {
-		if ( is_string( $plugins ) && file_exists( $plugins ) ) {
+		if ( is_string( $plugins ) ) {
+			if ( ! file_exists( $plugins ) ) {
+				return;
+			}
+
 			self::$plugins[] = $plugins;
-		} else {
+		} else if ( is_array( $files ) ) {
 			$plugins = array_filter( $plugins, function ( $plugin ) {
 				return file_exists( $plugin );
 			} );
