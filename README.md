@@ -24,11 +24,13 @@ php:
 env:
   - WP_VERSION=latest WP_MULTISITE=0
 
+install:
+  - travis_retry composer install --no-interaction --prefer-source
+
 before_script:
-  - composer install
   - bash vendor/frozzare/wp-test-suite/bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1 $WP_VERSION
 
-script: phpunit
+script: vendor/bin/phpunit
 ```
 
 Example `phpunit.xml.dist`:
