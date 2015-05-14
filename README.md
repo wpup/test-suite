@@ -100,9 +100,9 @@ A array of file paths or a string of a file path to load.
 ##### WP_Test_Suite::set_test_root
 
 Set a new test root path. It will try to autoload from:
-- WP_DEVELOP_DIR/tests/phpunit
-- /tmp/wordpress-tests-lib
-- /srv/www/wordpress-develop/tests/phpunit
+- `WP_DEVELOP_DIR/tests/phpunit`
+- `/tmp/wordpress-tests-lib`
+- `/srv/www/wordpress-develop/tests/phpunit`
 
 ## License
 
