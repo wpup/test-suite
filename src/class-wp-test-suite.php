@@ -152,16 +152,16 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 				} );
 			}
 
-			foreach ( self::$files as $file ) {
-				require $file;
-			}
-
 			if ( ! file_exists( $test_root . '/includes/bootstrap.php' ) ) {
 				throw new \Exception( sprintf( '%s is missing', $test_root . '/includes/boostrap.php' ) );
 			}
 
 			if ( ! class_exists( 'WP_UnitTestCase' ) ) {
 				require $test_root . '/includes/bootstrap.php';
+			}
+
+			foreach ( self::$files as $file ) {
+				require $file;
 			}
 		}
 
