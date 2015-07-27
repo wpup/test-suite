@@ -21,13 +21,11 @@ install_wp() {
 
 	if [ $WP_VERSION == 'latest' ]; then
 		local ARCHIVE_NAME='latest'
-	else if [ $WP_VERSION == 'nightly' ]; then
+	elif [ $WP_VERSION == 'nightly' ]; then
 		local ARCHIVE_NAME='nightly-builds/wordpress-latest'
 	else
 		local ARCHIVE_NAME="wordpress-$WP_VERSION"
 	fi
-
-	TMP_EXTRACT=$(mktemp -d /tmp/wp-XXXXX)
 
 	wget -nv -O /tmp/wordpress.zip https://wordpress.org/${ARCHIVE_NAME}.zip
 	unzip /tmp/wordpress.zip -d $WP_CORE_DIR
