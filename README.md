@@ -24,11 +24,13 @@ php:
 env:
   - WP_VERSION=latest WP_MULTISITE=0
 
+install:
+  - travis_retry composer install --no-interaction --prefer-source
+
 before_script:
-  - composer install
   - bash vendor/frozzare/wp-test-suite/bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1 $WP_VERSION
 
-script: phpunit
+script: vendor/bin/phpunit
 ```
 
 Example `phpunit.xml.dist`:
@@ -98,9 +100,9 @@ A array of file paths or a string of a file path to load.
 ##### WP_Test_Suite::set_test_root
 
 Set a new test root path. It will try to autoload from:
-- WP_DEVELOP_DIR/tests/phpunit
-- /tmp/wordpress-tests-lib
-- /srv/www/wordpress-develop/tests/phpunit
+- `WP_DEVELOP_DIR/tests/phpunit`
+- `/tmp/wordpress-tests-lib`
+- `/srv/www/wordpress-develop/tests/phpunit`
 
 ## License
 
