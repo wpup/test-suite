@@ -3,13 +3,11 @@
 /**
  *  Don't continue if `WP_Test_Suite` class exists.
  */
-
 if ( ! class_exists( 'WP_Test_Suite' ) ):
 
 	/**
 	 * WordPress Test Suite.
 	 */
-
 	class WP_Test_Suite {
 
 		/**
@@ -17,7 +15,6 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 		 *
 		 * @var object
 		 */
-
 		protected static $files = array();
 
 		/**
@@ -25,7 +22,6 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 		 *
 		 * @var object
 		 */
-
 		protected static $plugins = array();
 
 		/**
@@ -33,7 +29,6 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 		 *
 		 * @var string
 		 */
-
 		protected static $test_root = '';
 
 		/**
@@ -41,7 +36,6 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 		 *
 		 * @return array
 		 */
-
 		public static function find_plugin() {
 			$path = getcwd() . '/';
 			$file = defined( 'WTB_PLUGIN_FILE_NAME' ) ? WTB_PLUGIN_FILE_NAME : '';
@@ -58,7 +52,6 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 		 *
 		 * @return string
 		 */
-
 		public static function get_test_root() {
 			if ( ! empty( self::$test_root ) || file_exists( self::$test_root ) ) {
 				return self::$test_root;
@@ -84,7 +77,6 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 		 *
 		 * @param array|string $files
 		 */
-
 		public static function load_files( $files ) {
 			if ( is_string( $files ) ) {
 				if ( ! file_exists( $files ) ) {
@@ -105,7 +97,6 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 		 *
 		 * @param array|string $plugins
 		 */
-
 		public static function load_plugins( $plugins ) {
 			if ( is_string( $plugins ) ) {
 				if ( ! file_exists( $plugins ) ) {
@@ -125,7 +116,6 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 		/**
 		 * Run WordPress tests.
 		 */
-
 		public static function run() {
 			$test_root = self::get_test_root();
 			$test_root = rtrim( $test_root, '/' );
@@ -170,7 +160,6 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 		 *
 		 * @param string $test_rot
 		 */
-
 		public static function set_test_root( $test_root ) {
 			self::$test_root = $test_root;
 		}
