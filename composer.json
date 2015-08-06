@@ -18,5 +18,6 @@
       "src/class-wp-test-suite.php"
     ]
   },
-  "minimum-stability": "dev"
+  "minimum-stability": "dev",
+	"prefer-stable": true
 }
