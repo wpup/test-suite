@@ -104,7 +104,7 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 				}
 
 				self::$plugins[] = $plugins;
-			} else if ( is_array( $files ) ) {
+			} else if ( is_array( $plugins ) ) {
 				$plugins = array_filter( $plugins, function ( $plugin ) {
 					return file_exists( $plugin );
 				} );
