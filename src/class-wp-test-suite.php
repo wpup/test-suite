@@ -115,8 +115,10 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 
 		/**
 		 * Run WordPress tests.
+		 *
+		 * @param object $closure
 		 */
-		public static function run() {
+		public static function run( $closure = null ) {
 			$test_root = self::get_test_root();
 			$test_root = rtrim( $test_root, '/' );
 
@@ -148,6 +150,10 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 
 			if ( ! class_exists( 'WP_UnitTestCase' ) ) {
 				require $test_root . '/includes/bootstrap.php';
+			}
+
+			if ( is_callable( $closure ) ) {
+				call_user_func( $closure );
 			}
 
 			foreach ( self::$files as $file ) {
