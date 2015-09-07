@@ -77,7 +77,7 @@ install_db() {
 	fi
 
 	# create database
-	mysql $DB_NAME --execute="CREATE DATABASE IF NOT EXISTS $DB_NAME" --user="$DB_USER" --password="$DB_PASS"$EXTRA
+	mysql --execute="CREATE DATABASE IF NOT EXISTS $DB_NAME" --user="$DB_USER" --password="$DB_PASS"$EXTRA
 }
 
 install_wp
