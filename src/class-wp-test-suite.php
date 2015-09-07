@@ -121,11 +121,11 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 			$test_root = rtrim( $test_root, '/' );
 
 			if ( empty( $test_root ) || ! file_exists( $test_root ) ) {
-				throw new \Exception( 'Empty test root' );
+				throw new Exception( 'Empty test root' );
 			}
 
 			if ( ! file_exists( $test_root . '/includes/functions.php' ) ) {
-				throw new \Exception( sprintf( '%s is missing', $test_root . '/includes/functions.php' ) );
+				throw new Exception( sprintf( '%s is missing', $test_root . '/includes/functions.php' ) );
 			}
 
 			if ( ! function_exists( 'tests_add_filter' ) ) {
@@ -143,7 +143,7 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 			}
 
 			if ( ! file_exists( $test_root . '/includes/bootstrap.php' ) ) {
-				throw new \Exception( sprintf( '%s is missing', $test_root . '/includes/boostrap.php' ) );
+				throw new Exception( sprintf( '%s is missing', $test_root . '/includes/boostrap.php' ) );
 			}
 
 			if ( ! class_exists( 'WP_UnitTestCase' ) ) {
