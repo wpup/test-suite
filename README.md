@@ -61,15 +61,15 @@ Example `phpunit.xml.dist`:
 Example of using your own `tests/boostrap.php` with WordPress Test Suite:
 
 ```php
-require dirname(__DIR__) . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
-WP_Test_Suite::load_plugins(array(
-  dirname(__DIR__) . '/simple-gtm.php'
-));
+WP_Test_Suite::load_plugins( [
+  __DIR__ . '/../simple-gtm.php'
+] );
 
 WP_Test_Suite::run();
 ```
-## Documentation
+## Documentationw
 
 #### Without a bootstrap.php
 
