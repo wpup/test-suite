@@ -6,6 +6,11 @@
 if ( ! class_exists( 'WP_Test_Suite' ) ):
 
 	/**
+	 * Include extras function file.
+	 */
+	require_once __DIR__ . '/extras.php';
+
+	/**
 	 * WordPress Test Suite.
 	 */
 	class WP_Test_Suite {
