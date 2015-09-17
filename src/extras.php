@@ -12,6 +12,6 @@ if ( ! function_exists( 'is_post_type_viewable' ) ) {
      * @return bool
      */
     function is_post_type_viewable( $post_type_object ) {
-        return $post_type_object->publicly_queryable || ( $post_type_object->_builtin && $post_type_object->public )
+        return $post_type_object->publicly_queryable || ( $post_type_object->_builtin && $post_type_object->public );
     }
 }
