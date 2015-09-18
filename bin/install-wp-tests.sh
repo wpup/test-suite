@@ -50,7 +50,7 @@ install_test_suite() {
 	# set up testing suite
 	git clone https://github.com/frozzare/wordpress-develop.git $WP_DEVELOP_DIR
 
-	wget -nv -O wp-tests-config.php https://develop.svn.wordpress.org/trunk/wp-tests-config-sample.php
+	wget -nv -O wp-tests-config.php https://raw.githubusercontent.com/frozzare/wordpress-develop/master/wp-tests-config-sample.php
 	sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR':" wp-tests-config.php
 	sed $ioption "s/youremptytestdbnamehere/$DB_NAME/" wp-tests-config.php
 	sed $ioption "s/yourusernamehere/$DB_USER/" wp-tests-config.php
