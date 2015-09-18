@@ -66,6 +66,10 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 				return getenv( 'WP_DEVELOP_DIR' ) . '/tests/phpunit';
 			}
 
+			if ( file_exists( '/tmp/wordpress-develop/tests/phpunit/includes/bootstrap.php' ) ) {
+				return '/tmp/wordpress-develop/tests/phpunit';
+			}
+
 			if ( file_exists( '/tmp/wordpress-tests-lib/includes/bootstrap.php' ) ) {
 				return '/tmp/wordpress-tests-lib';
 			}
