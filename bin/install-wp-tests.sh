@@ -48,7 +48,7 @@ install_test_suite() {
 	fi
 
 	# set up testing suite
-	git clone --depth=1 git://develop.git.wordpress.org/ $WP_DEVELOP_DIR
+	git clone git@github.com:frozzare/wordpress-develop.git $WP_DEVELOP_DIR
 
 	wget -nv -O wp-tests-config.php https://develop.svn.wordpress.org/trunk/wp-tests-config-sample.php
 	sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR':" wp-tests-config.php
