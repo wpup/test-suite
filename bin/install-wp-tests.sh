@@ -11,8 +11,9 @@ DB_PASS=$3
 DB_HOST=${4-localhost}
 WP_VERSION=${5-latest}
 
-WP_TESTS_DIR=${WP_TESTS_DIR-/tmp/wordpress-tests-lib}
 WP_CORE_DIR=/tmp/wordpress/
+
+export WP_DEVELOP_DIR=${WP_DEVELOP_DIR-/tmp/wordpress-develop}
 
 set -ex
 
@@ -47,9 +48,7 @@ install_test_suite() {
 	fi
 
 	# set up testing suite
-	mkdir -p $WP_TESTS_DIR
-	cd $WP_TESTS_DIR
-	svn co --quiet https://develop.svn.wordpress.org/trunk/tests/phpunit/includes/
+	git clone --depth=1 git://develop.git.wordpress.org/ $WP_DEVELOP_DIR
 
 	wget -nv -O wp-tests-config.php https://develop.svn.wordpress.org/trunk/wp-tests-config-sample.php
 	sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR':" wp-tests-config.php
