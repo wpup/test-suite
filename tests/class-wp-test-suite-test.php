@@ -5,7 +5,7 @@
  */
 class WP_Test_Suite_Test extends WP_UnitTestCase {
 
-	public function wp_test() {
+	public function test_bool() {
 		$this->assertTrue( true );
 	}
 
