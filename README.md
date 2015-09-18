@@ -69,7 +69,7 @@ WP_Test_Suite::load_plugins( [
 
 WP_Test_Suite::run();
 ```
-## Documentationw
+## Documentation
 
 #### Without a bootstrap.php
 
