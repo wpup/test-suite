@@ -101,6 +101,7 @@ A array of file paths or a string of a file path to load.
 
 Set a new test root path. It will try to autoload from:
 - `WP_DEVELOP_DIR/tests/phpunit`
+- `/tmp/wordpress-develop/tests/phpunit`
 - `/tmp/wordpress-tests-lib`
 - `/srv/www/wordpress-develop/tests/phpunit`
 
