@@ -148,7 +148,6 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 
 			foreach ( $plugins as $plugin ) {
 				tests_add_filter( 'muplugins_loaded', function () use ( $plugin ) {
-					var_dump('hej');
 					require $plugin;
 				} );
 			}
