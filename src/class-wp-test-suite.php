@@ -6,11 +6,6 @@
 if ( ! class_exists( 'WP_Test_Suite' ) ):
 
 	/**
-	 * Include extras function file.
-	 */
-	require_once __DIR__ . '/extras.php';
-
-	/**
 	 * WordPress Test Suite.
 	 */
 	class WP_Test_Suite {
@@ -27,7 +22,9 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 		 *
 		 * @var object
 		 */
-		protected static $plugins = array();
+		protected static $plugins = array(
+			__DIR__ . '/extras.php'
+		);
 
 		/**
 		 * WordPress test root.
