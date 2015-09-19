@@ -142,11 +142,13 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 				self::$plugins = self::find_plugin();
 			}
 
-			$plugins = self::$plugins;
-			$plguins[] = __DIR__ . '/extras.php';
+			$plugins = array_merge( self::$plugins, array(
+				__DIR__ . '/extras.php'
+			) );
 
 			foreach ( $plugins as $plugin ) {
 				tests_add_filter( 'muplugins_loaded', function () use ( $plugin ) {
+					var_dump('hej');
 					require $plugin;
 				} );
 			}
