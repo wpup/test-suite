@@ -1,6 +1,6 @@
 <?php
 
-if ( ! function_exists( 'is_post_type_viewable' ) && version_compare( get_bloginfo( 'version' ), '4.4', '<' ) ) {
+if ( ! function_exists( 'is_post_type_viewable' ) ) {
     /**
      * Determines whether a post type is considered "viewable".
      *
