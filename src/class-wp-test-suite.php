@@ -22,9 +22,7 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 		 *
 		 * @var object
 		 */
-		protected static $plugins = array(
-			__DIR__ . '/extras.php'
-		);
+		protected static $plugins = array();
 
 		/**
 		 * WordPress test root.
@@ -144,7 +142,10 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 				self::$plugins = self::find_plugin();
 			}
 
-			foreach ( self::$plugins as $plugin ) {
+			$plugins = self::$plugins;
+			$plguins[] = __DIR__ . '/extras.php';
+
+			foreach ( $plugins as $plugin ) {
 				tests_add_filter( 'muplugins_loaded', function () use ( $plugin ) {
 					require $plugin;
 				} );
