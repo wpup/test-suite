@@ -45,7 +45,7 @@ Example `phpunit.xml.dist`:
   convertWarningsToExceptions="true"
   >
   <php>
-    <const name="WTB_PLUGIN_FILE_NAME" value="simple-gtm.php" />
+    <const name="WTS_PLUGIN_FILE_NAME" value="simple-gtm.php" />
   </php>
   <testsuites>
     <testsuite name="Simple GTM Test Suite">
@@ -81,10 +81,10 @@ This package include `install-wp-tests.sh` and the path is:
 vendor/frozzare/wp-test-suite/bin/install-wp-tests.sh
 ```
 
-##### WTB_PLUGIN_FILE_NAME
+##### WTS_PLUGIN_FILE_NAME
 
 With this constant you don't have to create your own `boostrap.php`. Just include
-`WTB_PLUGIN_FILE_NAME` const in your `phpunit.xml.dist` with the plugin file name
+`WTS_PLUGIN_FILE_NAME` const in your `phpunit.xml.dist` with the plugin file name
 that should be loaded.
 
 #### With a bootstrap.php

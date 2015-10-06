@@ -38,7 +38,7 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 		 */
 		public static function find_plugin() {
 			$path = getcwd() . '/';
-			$file = defined( 'WTB_PLUGIN_FILE_NAME' ) ? WTB_PLUGIN_FILE_NAME : 'plugin.php';
+			$file = defined( 'WTS_PLUGIN_FILE_NAME' ) ? WTS_PLUGIN_FILE_NAME : 'plugin.php';
 
 			if ( empty( $file ) || ! file_exists( $path . $file ) ) {
 				return array();
