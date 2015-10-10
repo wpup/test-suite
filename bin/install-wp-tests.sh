@@ -14,6 +14,8 @@ WP_VERSION=${5-latest}
 WP_CORE_DIR=/tmp/wordpress/
 WP_DEVELOP_DIR=${WP_DEVELOP_DIR-/tmp/wordpress-develop}
 
+# Solution from https://github.com/wp-cli/wp-cli/blob/master/templates/install-wp-tests.sh#L25
+
 download() {
     if [ `which curl` ]; then
         curl -s "$1" > "$2";
@@ -22,7 +24,6 @@ download() {
     fi
 }
 
-# Solution from https://github.com/wp-cli/wp-cli/blob/master/templates/install-wp-tests.sh#L25
 if [[ $WP_VERSION =~ [0-9]+\.[0-9]+(\.[0-9]+)? ]]; then
 	WP_BRANCH="$WP_VERSION"
 elif [[ $WP_VERSION == 'nightly' ]]; then
@@ -38,8 +39,6 @@ else
 	fi
 	WP_BRANCH="$LATEST_VERSION"
 fi
-
-echo $WP_BRANCH
 
 set -ex
 
