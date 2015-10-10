@@ -14,6 +14,17 @@ WP_VERSION=${5-latest}
 WP_CORE_DIR=/tmp/wordpress/
 WP_DEVELOP_DIR=${WP_DEVELOP_DIR-/tmp/wordpress-develop}
 
+if [[ $WP_VERSION =~ [0-9]+\.[0-9]+(\.[0-9]+)? ]]; then
+	WP_BRANCH="$WP_VERSION"
+else
+	if [ $WP_VERSION == 'latest' ]; then
+		version=`curl -s "https://wordpress.org/download/" | grep -ioE "Version\s(\d\.\d)"`
+		version=${version/Version/""}
+	else
+		WP_BRANCH='master'
+	fi
+fi
+
 set -ex
 
 install_wp() {
@@ -48,6 +59,9 @@ install_test_suite() {
 
 	# set up testing suite
 	git clone https://github.com/frozzare/wordpress-develop.git $WP_DEVELOP_DIR
+	cd $WP_DEVELOP_DIR
+	git fetch
+	git checkout ${WP_BRANCH}
 
 	cp $WP_DEVELOP_DIR/wp-tests-config-sample.php $WP_DEVELOP_DIR/wp-tests-config.php
 	sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR':" $WP_DEVELOP_DIR/wp-tests-config.php
