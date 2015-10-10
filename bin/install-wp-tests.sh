@@ -14,23 +14,29 @@ WP_VERSION=${5-latest}
 WP_CORE_DIR=/tmp/wordpress/
 WP_DEVELOP_DIR=${WP_DEVELOP_DIR-/tmp/wordpress-develop}
 
-echo "debug"
-curl -s "https://wordpress.org/download/"|grep -ioE "Version\s(\d\.\d)"
-version=$(curl -s "https://wordpress.org/download/"|grep -ioE "Version\s(\d\.\d)")
-echo $version
-WP_BRANCH=${version/Version/''}
-echo WP_BRANCH
-echo "debug"
-exit;
+download() {
+    if [ `which curl` ]; then
+        curl -s "$1" > "$2";
+    elif [ `which wget` ]; then
+        wget -nv -O "$2" "$1"
+    fi
+}
 
-if [ $WP_VERSION == 'latest' ]; then
-	version=$(curl -s "https://wordpress.org/download/"|grep -ioE "Version\s(\d\.\d)")
-	echo $version
-	WP_BRANCH=${version/Version/''}
-elif [ $WP_VERSION == 'nightly' ]; then
+# Solution from https://github.com/wp-cli/wp-cli/blob/master/templates/install-wp-tests.sh#L25
+if [[ $WP_VERSION =~ [0-9]+\.[0-9]+(\.[0-9]+)? ]]; then
+	WP_BRANCH="$WP_VERSION"
+elif [[ $WP_VERSION == 'nightly' ]]; then
 	WP_BRANCH="master"
 else
-	WP_BRANCH="$WP_VERSION"
+	# http serves a single offer, whereas https serves multiple. we only want one
+	download http://api.wordpress.org/core/version-check/1.7/ /tmp/wp-latest.json
+	grep '[0-9]+\.[0-9]+(\.[0-9]+)?' /tmp/wp-latest.json
+	LATEST_VERSION=$(grep -o '"version":"[^"]*' /tmp/wp-latest.json | sed 's/"version":"//')
+	if [[ -z "$LATEST_VERSION" ]]; then
+		echo "Latest WordPress version could not be found"
+		exit 1
+	fi
+	WP_BRANCH="$LATEST_VERSION"
 fi
 
 echo $WP_BRANCH
