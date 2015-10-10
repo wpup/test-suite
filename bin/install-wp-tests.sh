@@ -19,6 +19,7 @@ if [[ $WP_VERSION =~ [0-9]+\.[0-9]+(\.[0-9]+)? ]]; then
 else
 	if [ $WP_VERSION == 'latest' ]; then
 		version=`curl -s "https://wordpress.org/download/" | grep -ioE "Version\s(\d\.\d)"`
+		echo $version
 		WP_BRANCH=${version/Version/''}
 	else
 		WP_BRANCH='master'
