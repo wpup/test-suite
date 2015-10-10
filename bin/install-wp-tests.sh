@@ -15,9 +15,7 @@ WP_CORE_DIR=/tmp/wordpress/
 WP_DEVELOP_DIR=${WP_DEVELOP_DIR-/tmp/wordpress-develop}
 
 echo "debug"
-curl -s "https://wordpress.org/download/"
-v=$(curl -s "https://wordpress.org/download/")
-echo $v
+curl -s "https://wordpress.org/download/"|grep -ioE "Version\s(\d\.\d)"
 version=$(curl -s "https://wordpress.org/download/"|grep -ioE "Version\s(\d\.\d)")
 echo $version
 WP_BRANCH=${version/Version/''}
