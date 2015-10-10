@@ -142,7 +142,7 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 				self::$plugins = self::find_plugin();
 			}
 
-			foreach ( $plugins as $plugin ) {
+			foreach ( self::$plugins as $plugin ) {
 				tests_add_filter( 'muplugins_loaded', function () use ( $plugin ) {
 					require $plugin;
 				} );
