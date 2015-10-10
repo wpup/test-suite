@@ -18,6 +18,8 @@ version=`curl -s "https://wordpress.org/download/" | grep -ioE "Version\s(\d\.\d
 echo $version
 WP_BRANCH=${version/Version/''}
 
+echo $WP_BRANCH
+
 if [[ $WP_VERSION == "nightly" ]]; then
 	WP_BRANCH="master"
 else
