@@ -14,6 +14,18 @@ WP_VERSION=${5-latest}
 WP_CORE_DIR=/tmp/wordpress/
 WP_DEVELOP_DIR=${WP_DEVELOP_DIR-/tmp/wordpress-develop}
 
+if [ $WP_VERSION == 'latest' ]; then
+	version=`curl -s "https://wordpress.org/download/" | grep -ioE "Version\s(\d\.\d)"`
+	echo $version
+	WP_BRANCH=${version/Version/''}
+elif [ $WP_VERSION == 'nightly' ]; then
+	WP_BRANCH='master'
+else
+	WP_BRANCH="$WP_VERSION"
+fi
+
+echo $WP_BRANCH
+
 set -ex
 
 install_wp() {
@@ -21,15 +33,10 @@ install_wp() {
 
 	if [ $WP_VERSION == 'latest' ]; then
 		local ARCHIVE_NAME='latest'
-		version=`curl -s "https://wordpress.org/download/" | grep -ioE "Version\s(\d\.\d)"`
-		echo $version
-		local WP_BRANCH=${version/Version/''}
 	elif [ $WP_VERSION == 'nightly' ]; then
 		local ARCHIVE_NAME='nightly-builds/wordpress-latest'
-		local WP_BRANCH='master'
 	else
 		local ARCHIVE_NAME="wordpress-$WP_VERSION"
-		local WP_BRANCH="$WP_VERSION"
 	fi
 
 	TMP_EXTRACT=$(mktemp -d /tmp/wp-XXXXX)
