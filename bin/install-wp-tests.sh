@@ -14,13 +14,15 @@ WP_VERSION=${5-latest}
 WP_CORE_DIR=/tmp/wordpress/
 WP_DEVELOP_DIR=${WP_DEVELOP_DIR-/tmp/wordpress-develop}
 
-version=`curl -s "https://wordpress.org/download/" | grep -ioE "Version\s(\d\.\d)"`
+version=$(curl -s "https://wordpress.org/download/" | grep -ioE "Version\s(\d\.\d)")
 echo $version
 WP_BRANCH=${version/Version/''}
 
-echo $WP_BRANCH
-
-if [[ $WP_VERSION == "nightly" ]]; then
+if [ $WP_VERSION == 'latest' ]; then
+	version=$(curl -s "https://wordpress.org/download/" | grep -ioE "Version\s(\d\.\d)")
+	echo $version
+	WP_BRANCH=${version/Version/''}
+elif [ $WP_VERSION == 'nightly' ]; then
 	WP_BRANCH="master"
 else
 	WP_BRANCH="$WP_VERSION"
