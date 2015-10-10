@@ -6,6 +6,7 @@ php:
   - hhvm
 
 env:
+    - WP_VERSION=4.3 WP_MULTISITE=0
     - WP_VERSION=latest WP_MULTISITE=0
     - WP_VERSION=nightly WP_MULTISITE=0
 
