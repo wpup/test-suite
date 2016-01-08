@@ -73,6 +73,10 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 				return '/srv/www/wordpress-develop/tests/phpunit';
 			}
 
+			if ( file_exists( '../../../../wordpress-develop/tests/phpunit/includes/bootstrap.php' ) ) {
+				return realpath( '../../../../wordpress-develop/tests/phpunit' );
+			}
+
 			return '';
 		}
 
