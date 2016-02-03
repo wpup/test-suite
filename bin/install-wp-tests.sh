@@ -11,10 +11,8 @@ DB_PASS=$3
 DB_HOST=${4-localhost}
 WP_VERSION=${5-latest}
 
-WP_CORE_DIR=/tmp/wordpress/
-WP_DEVELOP_DIR=${WP_DEVELOP_DIR-/tmp/wordpress-develop}
-
-# Solution from https://github.com/wp-cli/wp-cli/blob/master/templates/install-wp-tests.sh#L25
+WP_TESTS_DIR=${WP_TESTS_DIR-/tmp/wordpress-tests-lib}
+WP_CORE_DIR=${WP_CORE_DIR-/tmp/wordpress/}
 
 download() {
     if [ `which curl` ]; then
@@ -25,9 +23,9 @@ download() {
 }
 
 if [[ $WP_VERSION =~ [0-9]+\.[0-9]+(\.[0-9]+)? ]]; then
-	WP_BRANCH="$WP_VERSION"
-elif [[ $WP_VERSION == 'nightly' ]]; then
-	WP_BRANCH="master"
+	WP_TESTS_TAG="tags/$WP_VERSION"
+elif [[ $WP_VERSION == 'nightly' || $WP_VERSION == 'trunk' ]]; then
+	WP_TESTS_TAG="trunk"
 else
 	# http serves a single offer, whereas https serves multiple. we only want one
 	download http://api.wordpress.org/core/version-check/1.7/ /tmp/wp-latest.json
@@ -37,31 +35,35 @@ else
 		echo "Latest WordPress version could not be found"
 		exit 1
 	fi
-	WP_BRANCH="$LATEST_VERSION"
+	WP_TESTS_TAG="tags/$LATEST_VERSION"
 fi
 
 set -ex
 
 install_wp() {
-	mkdir -p $WP_CORE_DIR
 
-	if [ $WP_VERSION == 'latest' ]; then
-		local ARCHIVE_NAME='latest'
-	elif [ $WP_VERSION == 'nightly' ]; then
-		local ARCHIVE_NAME='nightly-builds/wordpress-latest'
-	else
-		local ARCHIVE_NAME="wordpress-$WP_VERSION"
+	if [ -d $WP_CORE_DIR ]; then
+		return;
 	fi
 
-	TMP_EXTRACT=$(mktemp -d /tmp/wp-XXXXX)
+	mkdir -p $WP_CORE_DIR
 
-	wget -nv -O /tmp/wordpress.zip https://wordpress.org/${ARCHIVE_NAME}.zip
-	unzip /tmp/wordpress.zip -d $TMP_EXTRACT
-	DIRS=($TMP_EXTRACT/*)
-	mv ${DIRS[@]:0:1}/* $WP_CORE_DIR
-	rm -r $TMP_EXTRACT
+	if [[ $WP_VERSION == 'nightly' || $WP_VERSION == 'trunk' ]]; then
+		mkdir -p /tmp/wordpress-nightly
+		download https://wordpress.org/nightly-builds/wordpress-latest.zip  /tmp/wordpress-nightly/wordpress-nightly.zip
+		unzip -q /tmp/wordpress-nightly/wordpress-nightly.zip -d /tmp/wordpress-nightly/
+		mv /tmp/wordpress-nightly/wordpress/* $WP_CORE_DIR
+	else
+		if [ $WP_VERSION == 'latest' ]; then
+			local ARCHIVE_NAME='latest'
+		else
+			local ARCHIVE_NAME="wordpress-$WP_VERSION"
+		fi
+		download https://wordpress.org/${ARCHIVE_NAME}.tar.gz  /tmp/wordpress.tar.gz
+		tar --strip-components=1 -zxmf /tmp/wordpress.tar.gz -C $WP_CORE_DIR
+	fi
 
-	wget -nv -O $WP_CORE_DIR/wp-content/db.php https://raw.github.com/markoheijnen/wp-mysqli/master/db.php
+	download https://raw.github.com/markoheijnen/wp-mysqli/master/db.php $WP_CORE_DIR/wp-content/db.php
 }
 
 install_test_suite() {
@@ -72,18 +74,24 @@ install_test_suite() {
 		local ioption='-i'
 	fi
 
-	# set up testing suite
-	git clone https://github.com/frozzare/wordpress-develop.git $WP_DEVELOP_DIR
-	cd $WP_DEVELOP_DIR
-	git fetch
-	git checkout ${WP_BRANCH}
+	# set up testing suite if it doesn't yet exist
+	if [ ! -d $WP_TESTS_DIR ]; then
+		# set up testing suite
+		mkdir -p $WP_TESTS_DIR
+		svn co --quiet https://develop.svn.wordpress.org/${WP_TESTS_TAG}/tests/phpunit/includes/ $WP_TESTS_DIR/includes
+	fi
 
-	cp $WP_DEVELOP_DIR/wp-tests-config-sample.php $WP_DEVELOP_DIR/wp-tests-config.php
-	sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR':" $WP_DEVELOP_DIR/wp-tests-config.php
-	sed $ioption "s/youremptytestdbnamehere/$DB_NAME/" $WP_DEVELOP_DIR/wp-tests-config.php
-	sed $ioption "s/yourusernamehere/$DB_USER/" $WP_DEVELOP_DIR/wp-tests-config.php
-	sed $ioption "s/yourpasswordhere/$DB_PASS/" $WP_DEVELOP_DIR/wp-tests-config.php
-	sed $ioption "s|localhost|${DB_HOST}|" $WP_DEVELOP_DIR/wp-tests-config.php
+	cd $WP_TESTS_DIR
+
+	if [ ! -f wp-tests-config.php ]; then
+		download https://develop.svn.wordpress.org/${WP_TESTS_TAG}/wp-tests-config-sample.php "$WP_TESTS_DIR"/wp-tests-config.php
+		sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR':" "$WP_TESTS_DIR"/wp-tests-config.php
+		sed $ioption "s/youremptytestdbnamehere/$DB_NAME/" "$WP_TESTS_DIR"/wp-tests-config.php
+		sed $ioption "s/yourusernamehere/$DB_USER/" "$WP_TESTS_DIR"/wp-tests-config.php
+		sed $ioption "s/yourpasswordhere/$DB_PASS/" "$WP_TESTS_DIR"/wp-tests-config.php
+		sed $ioption "s|localhost|${DB_HOST}|" "$WP_TESTS_DIR"/wp-tests-config.php
+	fi
+
 }
 
 install_db() {
@@ -94,7 +102,7 @@ install_db() {
 	local EXTRA=""
 
 	if ! [ -z $DB_HOSTNAME ] ; then
-		if [[ "$DB_SOCK_OR_PORT" =~ ^[0-9]+$ ]] ; then
+		if [ $(echo $DB_SOCK_OR_PORT | grep -e '^[0-9]\{1,\}$') ]; then
 			EXTRA=" --host=$DB_HOSTNAME --port=$DB_SOCK_OR_PORT --protocol=tcp"
 		elif ! [ -z $DB_SOCK_OR_PORT ] ; then
 			EXTRA=" --socket=$DB_SOCK_OR_PORT"
@@ -104,7 +112,7 @@ install_db() {
 	fi
 
 	# create database
-	mysql --execute="CREATE DATABASE IF NOT EXISTS $DB_NAME" --user="$DB_USER" --password="$DB_PASS"$EXTRA
+	mysqladmin create $DB_NAME --user="$DB_USER" --password="$DB_PASS"$EXTRA
 }
 
 install_wp
