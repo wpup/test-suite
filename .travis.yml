@@ -2,7 +2,6 @@ language: php
 
 php:
   - 5.4
-  - hhvm
   - 7.0
 
 env:
