@@ -2,10 +2,11 @@ language: php
 
 php:
   - 5.4
+  - hhvm
   - 7.0
 
 env:
-    - WP_VERSION=4.3 WP_MULTISITE=0
+    - WP_VERSION=4.0 WP_MULTISITE=0
     - WP_VERSION=latest WP_MULTISITE=0
     - WP_VERSION=nightly WP_MULTISITE=0
 
