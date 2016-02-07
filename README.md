@@ -1,5 +1,7 @@
 # WordPress Test Suite
 
+[![Build Status](https://travis-ci.org/frozzare/wp-test-suite.svg?branch=master)](https://travis-ci.org/frozzare/wp-test-suite)
+
 Instead of adding a `boostrap.php` to every plugin you do you can just install this package and point to the `bootstrap.php`.
 For small plugins this should be enough. If you require something more advanced this isn't the package for your project.
 
