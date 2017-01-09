@@ -73,9 +73,17 @@ if ( ! class_exists( 'WP_Test_Suite' ) ):
 				return '/srv/www/wordpress-develop/tests/phpunit';
 			}
 
+            if ( file_exists( '/srv/www/wordpress-develop/public_html/tests/phpunit/includes/bootstrap.php' ) ) {
+                return '/srv/www/wordpress-develop/public_html/tests/phpunit';
+            }
+
 			if ( file_exists( '../../../../wordpress-develop/tests/phpunit/includes/bootstrap.php' ) ) {
 				return realpath( '../../../../wordpress-develop/tests/phpunit' );
 			}
+
+            if ( file_exists( '../../../../wordpress-develop/public_html/tests/phpunit/includes/bootstrap.php' ) ) {
+                return realpath( '../../../../wordpress-develop/public_html/tests/phpunit' );
+            }
 
 			return '';
 		}
