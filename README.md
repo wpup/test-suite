@@ -106,6 +106,7 @@ Set a new test root path. It will try to autoload from:
 - `/tmp/wordpress-develop/tests/phpunit`
 - `/tmp/wordpress-tests-lib`
 - `/srv/www/wordpress-develop/tests/phpunit`
+- `/srv/www/wordpress-develop/public_html/tests/phpunit`
 
 ## License
 
