@@ -8,7 +8,7 @@ For small plugins this should be enough. If you require something more advanced 
 # Install
 
 ```
-$ composer require frozzare/wp-test-suite
+composer require frozzare/wp-test-suite
 ```
 
 ## Example
